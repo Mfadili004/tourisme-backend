@@ -1,0 +1,25 @@
+# ══════════════════════════════════════════════════
+# Add these to your existing pubspec.yaml
+# ══════════════════════════════════════════════════
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Firebase
+  firebase_core: ^3.3.0
+  firebase_auth: ^5.1.0
+
+  # HTTP calls to Spring Boot API
+  http: ^1.2.0
+  dio: ^5.4.0           # Alternative with interceptors (recommended)
+
+  # Secure token storage
+  flutter_secure_storage: ^9.0.0
+
+  # State management
+  provider: ^6.1.2
+
+  # Already in your APK (keep)
+  cupertino_icons: ^1.0.8
+  flutter_map: ^7.0.2
