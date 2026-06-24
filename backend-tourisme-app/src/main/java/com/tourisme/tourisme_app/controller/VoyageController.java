@@ -17,7 +17,11 @@ public class VoyageController {
 
     private final VoyageService voyageService;
 
-    /** GET /api/voyages/tourist/{touristId} */
+    @GetMapping
+    public List<Voyage> all() {
+        return voyageService.findAll();
+    }
+
     @GetMapping("/tourist/{touristId}")
     public List<Voyage> byTourist(@PathVariable Long touristId) {
         return voyageService.findByTourist(touristId);
