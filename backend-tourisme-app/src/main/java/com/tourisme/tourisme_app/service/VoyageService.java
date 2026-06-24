@@ -16,6 +16,10 @@ public class VoyageService {
     private final TouristRepository touristRepository;
     private final TerrainRepository terrainRepository;
 
+    public List<Voyage> findAll() {
+        return voyageRepository.findAll();
+    }
+
     public List<Voyage> findByTourist(Long touristId) {
         return voyageRepository.findByTouristId(touristId);
     }
