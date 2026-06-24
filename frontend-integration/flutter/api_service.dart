@@ -7,7 +7,7 @@ class ApiService {
   
   // Change this to your server IP when testing on real device
   // Use 10.0.2.2 for Android emulator (= localhost on PC)
-  static const String baseUrl = 'http://10.0.2.2:8080/api';
+static const String baseUrl = 'https://tourisme-backend-production-bc89.up.railway.app/api';
 
   /// Returns headers with valid Firebase token
   static Future<Map<String, String>> _authHeaders() async {

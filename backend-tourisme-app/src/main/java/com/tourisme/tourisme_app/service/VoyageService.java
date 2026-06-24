@@ -35,7 +35,7 @@ public class VoyageService {
     @Transactional
     public Voyage update(Long id, VoyageRequest req) {
         Voyage v = findById(id);
-        v.getItinerary().clear();   // rebuild itinerary
+        v.getItinerary().clear();
         apply(v, req);
         return voyageRepository.save(v);
     }
@@ -44,7 +44,7 @@ public class VoyageService {
         voyageRepository.deleteById(id);
     }
 
-    /** Maps the request DTO onto the entity. */
+    /** Maps the request DTO onto the entity. Entites introuvables = ignorees. */
     private void apply(Voyage v, VoyageRequest req) {
         v.setTitle(req.getTitle());
         v.setDestination(req.getDestination());
@@ -53,16 +53,16 @@ public class VoyageService {
         v.setMatchLabel(req.getMatchLabel());
         v.setMatchDate(req.getMatchDate());
 
+        // Tourist optionnel : si introuvable, on n'attache rien
         if (req.getTouristId() != null) {
-            Tourist t = touristRepository.findById(req.getTouristId())
-                .orElseThrow(() -> new RuntimeException("Tourist not found"));
-            v.setTourist(t);
+            v.setTourist(touristRepository.findById(req.getTouristId()).orElse(null));
+        } else {
+            v.setTourist(null);
         }
 
+        // Stade optionnel
         if (req.getStadeId() != null) {
-            Terrain stade = terrainRepository.findById(req.getStadeId())
-                .orElseThrow(() -> new RuntimeException("Stade not found"));
-            v.setStade(stade);
+            v.setStade(terrainRepository.findById(req.getStadeId()).orElse(null));
         } else {
             v.setStade(null);
         }
@@ -76,9 +76,7 @@ public class VoyageService {
                 step.setTime(s.getTime());
                 step.setNotes(s.getNotes());
                 if (s.getTerrainId() != null) {
-                    Terrain terrain = terrainRepository.findById(s.getTerrainId())
-                        .orElseThrow(() -> new RuntimeException("Terrain not found"));
-                    step.setTerrain(terrain);
+                    step.setTerrain(terrainRepository.findById(s.getTerrainId()).orElse(null));
                 }
                 step.setVoyage(v);
                 v.getItinerary().add(step);
